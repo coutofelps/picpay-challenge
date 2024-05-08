@@ -5,15 +5,15 @@ import java.time.LocalDateTime;
 
 import com.picpaychallenge.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity(name="transactions")
 @Table(name="transactions")
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of="id")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
