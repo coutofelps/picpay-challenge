@@ -38,10 +38,10 @@ public class TransactionService {
         }
 
         Transaction newTransaction = new Transaction();
-        newTransaction.setAmount(newTransaction.value());
+        newTransaction.setAmount(transaction.value());
         newTransaction.setSender(sender);
         newTransaction.setReceiver(receiver);
-        newTransaction.setTimeStamp(LocalDateTime.now());
+        newTransaction.setTimestamp(LocalDateTime.now());
 
         sender.setBalance(sender.getBalance().subtract(transaction.value()));
         receiver.setBalance(receiver.getBalance().add(transaction.value()));
