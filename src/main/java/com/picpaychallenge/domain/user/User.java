@@ -38,10 +38,10 @@ public class User {
     public User(UserDTO data) {
         this.firstName = data.firstName();
         this.lastName = data.lastName();
-        this.balance = data.balance();
-        this.userType = data.userType();
-        this.firstName = data.firstName();
+        this.document = data.document();
         this.email = data.email();
         this.password = data.password();
+        this.balance = data.balance();
+        this.userType = data.userType();
     }
 }
