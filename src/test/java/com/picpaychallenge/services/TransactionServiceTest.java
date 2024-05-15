@@ -5,6 +5,7 @@ import com.picpaychallenge.domain.user.UserType;
 import com.picpaychallenge.dtos.TransactionDTO;
 import com.picpaychallenge.dtos.UserDTO;
 import com.picpaychallenge.repositories.TransactionRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,23 @@ class TransactionServiceTest {
 
     @Test
     @DisplayName("Should throw exception when transaction authorization is not allowed")
-    void createTransactionCaseTwo() {
+    void createTransactionCaseTwo() throws Exception {
+        UserDTO senderDTO = new UserDTO("Marcos Felipe", "Rodrigues Couto", "12345678900", new BigDecimal(10), "0709.marcoscouto@gmail.com", "123456", UserType.COMMON);
+        UserDTO receiverDTO = new UserDTO("Nathália", "Miguez da Fonseca", "99999999900", new BigDecimal(30), "nathalia.miguez16@gmail.com", "123456", UserType.COMMON);
+
+        User sender = new User(senderDTO);
+        User receiver = new User(receiverDTO);
+
+        when(userService.findUserById(1L)).thenReturn(sender);
+        when(userService.findUserById(2L)).thenReturn(receiver);
+
+        when(authorizationService.authorizeTransaction(any(), any())).thenReturn(false);
+
+        Exception thrown = Assertions.assertThrows(Exception.class, () -> {
+            TransactionDTO request = new TransactionDTO(new BigDecimal(10), 1L, 2L);
+            transactionService.createTransaction(request);
+        });
+
+        Assertions.assertEquals("Transação não autorizada", thrown.getMessage());
     }
 }
